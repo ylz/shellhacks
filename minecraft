@@ -1,0 +1,37 @@
+#!/bin/bash
+#===================================================
+# Shell script to start minecraft with different
+# "profiles". Each profile needs to be stored
+# in ~/.minecraft_<PROFILENAME>. The base directory
+# .minecraft shall not exist, but needs to be 
+# initially created as symlink. Change your 
+# Minecraft.jar path.
+#===================================================
+
+
+if [ -z "$1" ]
+  then
+    echo "give name of profile as argument"
+    exit 1
+  else
+    PROFILE=$1
+fi
+
+if [ ! -L ~/.minecraft ]
+  then
+    echo ".minecraft is not a symbolic link, script does nothing but exits"
+    exit 3
+fi
+
+PROFDIR=~/.minecraft_$PROFILE
+
+if [ ! -d "$PROFDIR" ]
+  then
+    echo do not know profile $PROFILE or directory $PROFDIR
+    exit 2
+fi
+
+ln -sfn $PROFDIR ~/.minecraft
+
+java -Xmx2048m -jar ~/bin/Minecraft.jar
+
