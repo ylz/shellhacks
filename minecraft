@@ -11,11 +11,18 @@
 
 if [ -z "$1" ]
   then
-    echo "give name of profile as argument"
+    echo "give name of profile as argument or --list to list availables"
     exit 1
   else
     PROFILE=$1
 fi
+
+if [ $PROFILE = "--list" ]
+  then
+    ls -ld ~/.minecraft_*
+    exit 0
+fi
+
 
 if [ ! -L ~/.minecraft ]
   then
